@@ -3,6 +3,7 @@ public class BarChartVertical
     private const float FloatingCharValue = 0.5f;
     private ulong sizeX;
     private ulong sizeY;
+    private int VerMaxLen;
 
     private double _heightScale;
     private double _widthScale;
@@ -14,7 +15,8 @@ public class BarChartVertical
     public char DataAxisLabelDefChar { get; set; }
     public char SerieAxisLabelDefChar { get; set; }
 
-    public int FrameTickFreq { get; set; }
+    public int HorFrameTickFreq { get; set; }
+    public int VerFrameTickFreq { get; set; }
     public bool FrameTickOrientation { get; set; }
 
     public System.ConsoleColor BackgroundColor { get; set; }//del?
@@ -70,6 +72,7 @@ public class BarChartVertical
         SerieAxisLabelDefChar = ' ';
         sizeX = 1;
         sizeY = 1;
+        VerMaxLen = 0;
         Width = (uint)System.Console.WindowWidth;
         Height = (uint)System.Console.WindowHeight;
         BackgroundColor = System.Console.BackgroundColor;
@@ -89,7 +92,11 @@ public class BarChartVertical
         {
             foreach(DataPoint dp in s.DataPoints)
             {
-                if(dp.Data > sizeY) sizeY = (ulong)dp.Data;
+                if(dp.Data > sizeY) 
+                {
+                    sizeY = (ulong)dp.Data;
+                    VerMaxLen = sizeY.ToString().Length;
+                }
                 columns++;
             }
         }
@@ -138,6 +145,44 @@ public class BarChartVertical
 
     }
 
+    private string GetVerticalSection(int position)
+    {
+        string result;
+        
+        if (VerFrameTickFreq < 1)
+            result = new string(' ', VerMaxLen) + '│';
+        else
+        {
+            double step = (double)sizeY / Height;
+            int row = (int)Height - position;
+            
+            double val = (int)(step * row);
+
+            if (VerFrameTickFreq == 1 && FrameTickOrientation)
+            {
+                result = val.ToString().PadLeft(VerMaxLen, ' ') + '├';
+            }
+            else if (VerFrameTickFreq == 1 && !FrameTickOrientation)
+            {
+                result = val.ToString().PadLeft(VerMaxLen, ' ') + '┤';
+            }
+            else
+            {
+                if(position % VerFrameTickFreq == 0) 
+                {
+                    if(FrameTickOrientation) 
+                        result = val.ToString().PadLeft(VerMaxLen, ' ') + '├';
+                    else result = val.ToString().PadLeft(VerMaxLen, ' ') + '┤';
+                }
+                else 
+                {
+                    result = new string(' ', VerMaxLen) + '│';
+                }
+            }
+        }
+        return result;
+    }
+
     public System.Collections.Generic.List<string> Draw()
     {
         System.Collections.Generic.List<string> result = 
@@ -165,6 +210,7 @@ public class BarChartVertical
     {
         for(int row = 0; row < (int)Height; row++)
         {
+            System.Console.Write(GetVerticalSection(row));
             foreach(Serie s in Series)
             {
                 foreach(DataPoint dp in s.DataPoints)
@@ -315,19 +361,22 @@ public class BarChartVertical
 
     private void PrintHorizontalLine()
     {
-        if (FrameTickFreq < 1)
+        System.Console.Write('└');
+        if (HorFrameTickFreq < 1)
             System.Console.WriteLine(new string('─',(int)Width));
         else
         {
-            if (FrameTickFreq == 1 && FrameTickOrientation)
+            if (HorFrameTickFreq == 1 && FrameTickOrientation)
                 System.Console.WriteLine(new string('┴',(int)Width));
-            else if (FrameTickFreq == 1 && !FrameTickOrientation)
+            else if (HorFrameTickFreq == 1 && !FrameTickOrientation)
                 System.Console.WriteLine(new string('┬',(int)Width));
             else
             {
-                for(int i = FrameTickFreq / 2; i < Width + (FrameTickFreq / 2); i++)
+                for(int i = HorFrameTickFreq / 2; 
+                i < Width + (HorFrameTickFreq / 2); 
+                i++)
                 {
-                    if(i % FrameTickFreq == 0) 
+                    if(i % HorFrameTickFreq == 0) 
                     {
                         if(FrameTickOrientation) System.Console.Write('┴');
                         else System.Console.Write('┬');
@@ -344,7 +393,7 @@ public class BarChartVertical
         System.Console.BackgroundColor = TitleBackgroundColor;
         System.Console.ForegroundColor = TitleForeroundColor;
         System.Console.Write(
-            FormatString((int)Width, TitleLabel, TitleDefChar)
+            FormatString((int)Width + VerMaxLen + 1, TitleLabel, TitleDefChar)
             );
         System.Console.ResetColor();
         System.Console.WriteLine();
@@ -352,19 +401,34 @@ public class BarChartVertical
 
     public void Print()
     {
-        //print title label
+        string space = new string(' ', VerMaxLen + 1);
+        string spaceForLine = new string(' ', VerMaxLen);
+
         if(TitleVisible) PrintTitle();
-        //print columns and y axis
         PrintMainArea();
-        //print x axis line
+
+        System.Console.Write(spaceForLine);
         PrintHorizontalLine();
-        //print datapoint axis caret
-        if(DataAxisCaretVisible) PrintDataAxisCaret();
-        //print datapoint axis label
-        if(DataAxisLabelVisible) PrintDataAxisLabels(DataAxisLabelDefChar);
-        //print series axis caret
-        if(SerieAxisCaretVisible) PrintSeriesAxisCaret();
-        //print series axis label
-        if(SerieAxisLabelVisible) PrintSeriesAxisLabels(SerieAxisLabelDefChar);
+
+        if(DataAxisCaretVisible) 
+        {
+            System.Console.Write(space);
+            PrintDataAxisCaret();
+        }
+        if(DataAxisLabelVisible) 
+        {
+            System.Console.Write(space);
+            PrintDataAxisLabels(DataAxisLabelDefChar);
+        }
+        if(SerieAxisCaretVisible) 
+        {
+            System.Console.Write(space);
+            PrintSeriesAxisCaret();
+        }
+        if(SerieAxisLabelVisible) 
+        {
+            System.Console.Write(space);
+            PrintSeriesAxisLabels(SerieAxisLabelDefChar);
+        }
     }
 }
