@@ -1,0 +1,119 @@
+{
+	"BarSpacing": 1,
+	"DefaultEmptyChar": " ",
+	"DefaultFilledChar": "█",
+	"DefaultFloatingChar": "▄",
+	"DataAxisLabelDefChar": " ",
+        "SerieAxisLabelDefChar":" ",
+        "HorFrameTickFreq": 0,
+        "VerFrameTickFreq": 2,
+    	"FrameTickOrientation": false,
+	"DataAxisLabelVisible": true,
+	"SerieAxisLabelVisible": true,
+	"DataAxisCaretVisible": false,
+    	"SerieAxisCaretVisible": false,
+	"Height": 16,
+	"Width": 44,
+	"TitleVisible": true,
+	"TitleLabel": "OS",
+	"TitleDefChar": " ",
+	"TitleBackgroundColor": 8,
+	"TitleForeroundColor": 7,
+	"Series": [{
+		"DataPoints": [{
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 4,
+			"Data": 25746.0,
+			"AxisLabel": "",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}, {
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 9,
+			"Data": 18071.0,
+			"AxisLabel": "",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}, {
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 2,
+			"Data": 15744.0,
+			"AxisLabel": "",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}, {
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 15,
+			"Data": 13168.0,
+			"AxisLabel": "",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}, {
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 2,
+			"Data": 12122.0,
+			"AxisLabel": "",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}, {
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 9,
+			"Data": 8311.0,
+			"AxisLabel": "",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}, {
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 13,
+			"Data": 5370.0,
+			"AxisLabel": "",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}],
+		"AxisBackgroundColor": 4,
+		"AxisForegroundColor": 15,
+		"DataPrimaryColor": 4,
+		"DataSecondaryColor": 4,
+		"AxisLabel": " LINUX",
+		"AxisLabelVisible": true
+	},
+	{
+		"DataPoints": [{
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 15,
+			"Data": 7841.0,
+			"AxisLabel": "7",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}, {
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 15,
+			"Data": 3473.0,
+			"AxisLabel": "8.1",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}, {
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 15,
+			"Data": 30917.0,
+			"AxisLabel": "10",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}, {
+			"AxisBackgroundColor": 8,
+			"AxisForegroundColor": 15,
+			"Data": 5070.0,
+			"AxisLabel": "11",
+			"AxisLabelVisible": true,
+			"UseAxisCustomColors": true
+		}],
+		"AxisBackgroundColor": 9,
+		"AxisForegroundColor": 15,
+		"DataPrimaryColor": 1,
+		"DataSecondaryColor": 1,
+		"DataLabel": null,
+		"AxisLabel": " WINDOWS",
+		"DataLabelVisible": false,
+		"AxisLabelVisible": true
+	}]
+}
