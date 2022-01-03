@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace ConsoleBasicCharts
@@ -26,6 +27,8 @@ namespace ConsoleBasicCharts
         */
         static void Main(string[] args)
         {
+            char interpetAs = 'h';
+
             if(args is null)
             {
                 Console.Write("...");
@@ -33,7 +36,7 @@ namespace ConsoleBasicCharts
             }
             else if(args.Length < 1)
             {
-                Console.WriteLine("no arguments were given");
+                Console.WriteLine("not enough arguments were given");
                 return;
             }
             else if(string.IsNullOrWhiteSpace(args[0]))
@@ -47,19 +50,33 @@ namespace ConsoleBasicCharts
                 return;
             }
 
-            try
+            if(args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))
             {
-                BarChartVertical barChartVertical = 
-                JsonConvert.DeserializeObject<BarChartVertical>(
-                    File.ReadAllText(args[0]));
-                barChartVertical.CalculateSizes();
-                barChartVertical.Print();
+                string val = args[1].ToLower();
+                interpetAs = val[0];
             }
-            catch(Exception ex)
+
+            switch(interpetAs)
             {
-                System.Console.WriteLine(ex.Message);
+                case 'h':
+                Console.WriteLine("working on");
+                break;
+
+                case 'v':
+                try
+                {
+                    BarChartVertical barChartVertical = 
+                    JsonConvert.DeserializeObject<BarChartVertical>(
+                        File.ReadAllText(args[0]));
+                    barChartVertical.CalculateSizes();
+                    barChartVertical.Print();
+                }
+                catch(Exception ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                }
+                break;
             }
-            
         }
     }
 }
