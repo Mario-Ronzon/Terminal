@@ -59,7 +59,18 @@ namespace ConsoleBasicCharts
             switch(interpetAs)
             {
                 case 'h':
-                Console.WriteLine("working on");
+                try
+                {
+                    BarChartHorizontal barChartHorizontal = 
+                        JsonConvert.DeserializeObject<BarChartHorizontal>(
+                        File.ReadAllText(args[0]));
+                    barChartHorizontal.CalculateSizes();
+                    barChartHorizontal.Print();
+                }
+                catch(Exception ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                }
                 break;
 
                 case 'v':
